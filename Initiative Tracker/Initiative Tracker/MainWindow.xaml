@@ -3,51 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" MinHeight="600" MinWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <Menu IsMainMenu="True" Grid.Row="0" VerticalAlignment="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_New" Click="TestMenuItem_Click"/>
-                <MenuItem Header="_Open" Click="TestMenuItem_Click"/>
-                <MenuItem Header="_Save" Click="TestMenuItem_Click"/>
-                <MenuItem Header="Save As..." Click="TestMenuItem_Click"/>
-                <Separator />
-                <MenuItem Header="E_xit" Click="Exit_Click"/>
-            </MenuItem>
-            <MenuItem Header="_Edit" Click="TestMenuItem_Click"/>
-            <MenuItem Header="_Data" Click="TestMenuItem_Click"/>
-            <MenuItem Header="_Combat" Click="TestMenuItem_Click">
-                
-            </MenuItem>
-            <MenuItem Header="_Help" Click="TestMenuItem_Click"/>
-        </Menu>
-        <Grid Name="ContentGrid" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MinWidth="200"/>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" MinWidth="200"/>
-            </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0"
-                      Background="Red">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <GridSplitter HorizontalAlignment="Right"
-                          VerticalAlignment="Stretch"
-                          Grid.Column="1"
-                          ResizeBehavior="PreviousAndNext"
-                          Width="4"
-                          Background="#FFBCBCBC" />
-            <Grid
-                Name="CombatantDisplay"
-                Grid.Column="2"
-                Background="Blue"/>
-        </Grid>
+
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace InitiativeTrackerLibrary
         Gargantuan
     }
 
-    public class DD4ECombatant : Combatant
+    public class DD4ECombatant : Combatant, INotifyPropertyChanged
     {
         #region Variables
         int baseArmorClass;
@@ -50,6 +51,14 @@ namespace InitiativeTrackerLibrary
             }
         }
         public bool IsBloodied { get { return CurrentHP < MaxHP / 2; } }
+        public string HealthString
+        {
+            get { return String.Format("HP: {0}/{1} ({2})", CurrentHP, MaxHP, TemporaryHP); }
+        }
+        #endregion
+
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
         #region Constructors
@@ -81,10 +90,13 @@ namespace InitiativeTrackerLibrary
 
             // End effects
             StatusEffects.RemoveAll(s => s.Duration == DD4EStatusEffectDuration.StartOfMyTurn);
+
+            OnPropertyChanged("StatusEffects");
         }
         public void OtherStartTurn(string combatant)
         {
             StatusEffects.RemoveAll(s => s.Duration == DD4EStatusEffectDuration.StartOfMyTurn && s.Source.Equals(combatant));
+            OnPropertyChanged("StatusEffects");
         }
         public void EndTurn()
         {
@@ -109,6 +121,8 @@ namespace InitiativeTrackerLibrary
                 if (StatusEffects[i].Duration == DD4EStatusEffectDuration.EndOfMyNextTurnSustain)
                     StatusEffects[i].Duration = DD4EStatusEffectDuration.EndOfMyTurnSustain;
             }
+
+            OnPropertyChanged("StatusEffects");
         }
         public void OtherEndTurn(string combatant)
         {
@@ -119,10 +133,14 @@ namespace InitiativeTrackerLibrary
                 if (StatusEffects[i].Duration == DD4EStatusEffectDuration.EndOfSourceNextTurn && StatusEffects[i].Source.Equals(combatant))
                     StatusEffects[i].Duration = DD4EStatusEffectDuration.EndOfSourceTurn;
             }
+
+            OnPropertyChanged("StatusEffects");
         }
         public void Heal(int health)
         {
             CurrentHP = Math.Min(MaxHP, CurrentHP + health);
+
+            OnPropertyChanged("CurrentHP");
         }
         public void TakeDamage(DD4EDamageType damageType, int damage)
         {
@@ -171,6 +189,7 @@ namespace InitiativeTrackerLibrary
             if (incomingDamage > 0)
             {
                 CurrentHP = Math.Max(0, CurrentHP - incomingDamage);
+                OnPropertyChanged("HealthString");
             }
 
             if (CurrentHP <= 0)
@@ -201,11 +220,25 @@ namespace InitiativeTrackerLibrary
             {
                     StatusEffects.Add(newStatusEffect);
             }
+            OnPropertyChanged("StatusEffects");
         }
         public override void RollInitiative()
         {
             Initiative = Random.Next(1, 20) + InitiativeBonus;
+            OnPropertyChanged("Initiative");
         }
+
+        #region Event Handling
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+        }
+        protected void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, args);
+        }
+        #endregion
         #endregion
     }
 }

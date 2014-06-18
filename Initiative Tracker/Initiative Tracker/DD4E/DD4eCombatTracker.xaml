@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Initiative_Tracker.DD4E.DD4eCombatTracker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800" MinWidth="800" MinHeight="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Menu IsMainMenu="True" Grid.Row="0" VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Click="TestMenuItem_Click"/>
+                <MenuItem Header="_Open" Click="TestMenuItem_Click"/>
+                <MenuItem Header="_Save" Click="TestMenuItem_Click"/>
+                <MenuItem Header="Save As..." Click="TestMenuItem_Click"/>
+                <Separator />
+                <MenuItem Header="E_xit" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Edit" Click="TestMenuItem_Click"/>
+            <MenuItem Header="_Data" Click="TestMenuItem_Click"/>
+            <MenuItem Header="_Combat">
+                <MenuItem Header="Add Combatant" Click="AddCombatant_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Help" Click="TestMenuItem_Click"/>
+        </Menu>
+        <Grid Name="ContentGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="200"/>
+            </Grid.ColumnDefinitions>
+            <ListView Name="CombatantList"
+                      Grid.Column="0"
+                      Background="Red">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Take Damage" Click="TakeDamage_Click"/>
+                        <MenuItem Header="Heal" />
+                        <Separator />
+                        <MenuItem Header="Move Up" />
+                        <MenuItem Header="Move Down" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text=" " />
+                            <TextBlock Text="{Binding HealthString}" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <GridSplitter HorizontalAlignment="Right"
+                          VerticalAlignment="Stretch"
+                          Grid.Column="1"
+                          ResizeBehavior="PreviousAndNext"
+                          Width="4"
+                          Background="#FFBCBCBC" />
+            <Grid
+                Name="CombatantDisplay"
+                Grid.Column="2"
+                Background="Blue"/>
+        </Grid>
+    </Grid>
+</UserControl>

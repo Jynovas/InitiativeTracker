@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Initiative_Tracker.DD4E;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,36 +22,35 @@ namespace Initiative_Tracker
     public partial class MainWindow : Window
     {
         #region Variables
+        DD4eCombatTracker dd4eCombatTracker;
         #endregion
 
         #region Properties
+        DD4eCombatTracker DD4eCombatTracker
+        {
+            set { dd4eCombatTracker = value; }
+            get
+            {
+                if (dd4eCombatTracker == null)
+                    dd4eCombatTracker = new DD4eCombatTracker();
+
+                return dd4eCombatTracker;
+            }
+        }
         #endregion
 
         #region Constructors
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Content = DD4eCombatTracker;
         }
         #endregion
 
         #region Methods
 
         #region Event Handler Methods
-        private void TestMenuItem_Click(object sender, RoutedEventArgs args)
-        {
-            if (sender is MenuItem)
-                MessageBox.Show("You clicked MenuItem " + (sender as MenuItem).Header + "...");
-            else
-                MessageBox.Show("You attached this event to something that is not a MenuItem...");
-        }
-        #region Menu Items
-        #region File Menu Items
-        private void Exit_Click(object sender, RoutedEventArgs args)
-        {
-            this.Close();
-        }
-        #endregion
-        #endregion
         #endregion
 
         #endregion
