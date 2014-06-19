@@ -96,14 +96,14 @@ namespace Initiative_Tracker.DD4E
         {
             SortByInitiative();
         }
-        private void TakeDamage_Click(object sender, RoutedEventArgs e)
+        private void Attack_Click(object sender, RoutedEventArgs e)
         {
             if (CombatantList.SelectedIndex == -1)
                 return;
 
             //(CombatantList.SelectedItem as DD4ECombatant).TakeDamage(DD4EDamageType.Unaspected, 5);
 
-            var damageWindow = new TakeDamageWindow();
+            var damageWindow = new TakeDamageWindow(Combatants, CombatantList.SelectedIndex);
             damageWindow.Show();
         }
         private void TakeFireDamage_Click(object sender, RoutedEventArgs e)

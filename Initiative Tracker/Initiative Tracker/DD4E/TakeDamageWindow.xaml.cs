@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using InitiativeTrackerLibrary;
 
 namespace Initiative_Tracker.DD4E
 {
@@ -19,6 +20,8 @@ namespace Initiative_Tracker.DD4E
     /// </summary>
     public partial class TakeDamageWindow : Window
     {
+        protected IList<DD4ECombatant> Combatants { get; set; }
+
         List<DD4EDamageType> damageTypes;
         protected List<DD4EDamageType> DamageTypes
         {
@@ -40,10 +43,24 @@ namespace Initiative_Tracker.DD4E
             }
         }
 
-        public TakeDamageWindow()
+        public TakeDamageWindow(IList<DD4ECombatant> combatants)
         {
             InitializeComponent();
+            this.Combatants = combatants;
 
+            AttackerBox.ItemsSource = Combatants;
+            DefenderList.ItemsSource = Combatants;
+            DamageTypeList.ItemsSource = DamageTypes;
+        }
+
+        public TakeDamageWindow(IList<DD4ECombatant> combatants, int selectedIndex)
+        {
+            InitializeComponent();
+            this.Combatants = combatants;
+
+            AttackerBox.ItemsSource = Combatants;
+            AttackerBox.SelectedIndex = selectedIndex;
+            DefenderList.ItemsSource = Combatants;
             DamageTypeList.ItemsSource = DamageTypes;
         }
 
@@ -60,6 +77,16 @@ namespace Initiative_Tracker.DD4E
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox_IntegerLimit(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9]*$");
+        }
+
+        private void ToHitText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            e.Handled = System.Text.RegularExpressions.Regex.IsMatch(ToHitText.Text, "^[0-9]*$");
         }
     }
 }

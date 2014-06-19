@@ -41,7 +41,7 @@
                         <ContextMenu>
                             <MenuItem Header="Sort by Initiative" Click="SortByInitiative_Click" />
                             <Separator />
-                            <MenuItem Header="Take Damage" Click="TakeDamage_Click"/>
+                            <MenuItem Header="Attack" Click="Attack_Click"/>
                             <MenuItem Header="Take Fire Damage" Click="TakeFireDamage_Click"/>
                             <MenuItem Header="Take Fire Radiant Damage" Click="TakeFireRadiantDamage_Click"/>
                             <MenuItem Header="Heal" Click="Heal_Click"/>
