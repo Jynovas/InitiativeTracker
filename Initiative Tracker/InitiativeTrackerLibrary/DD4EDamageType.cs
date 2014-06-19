@@ -7,7 +7,7 @@ using System.Text;
 public enum DD4EDamageType
 {
     None = 0x00,
-    Unaspected = None << 1,
+    Unaspected = 0x01,
     Acid = Unaspected << 1,
     Cold = Acid << 1,
     Fire = Cold << 1,

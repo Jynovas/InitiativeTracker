@@ -15,6 +15,7 @@ namespace InitiativeTrackerLibrary
         #region Properties
         public int Initiative { get; set; }
         public String Name { get; set; }
+        public bool IsPlayer { get; set; }
         protected static Random Random
         {
             get

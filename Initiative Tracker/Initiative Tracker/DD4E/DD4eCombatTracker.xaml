@@ -23,6 +23,8 @@
             <MenuItem Header="_Edit" Click="TestMenuItem_Click"/>
             <MenuItem Header="_Data" Click="TestMenuItem_Click"/>
             <MenuItem Header="_Combat">
+                <MenuItem Header="Start Combat" Click="StartCombat_Click" />
+                <Separator />
                 <MenuItem Header="Add Combatant" Click="AddCombatant_Click"/>
             </MenuItem>
             <MenuItem Header="_Help" Click="TestMenuItem_Click"/>
@@ -33,28 +35,55 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" MinWidth="200"/>
             </Grid.ColumnDefinitions>
-            <ListView Name="CombatantList"
-                      Grid.Column="0"
-                      Background="Red">
-                <ListView.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Take Damage" Click="TakeDamage_Click"/>
-                        <MenuItem Header="Heal" />
-                        <Separator />
-                        <MenuItem Header="Move Up" />
-                        <MenuItem Header="Move Down" />
-                    </ContextMenu>
-                </ListView.ContextMenu>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <WrapPanel>
-                            <TextBlock Text="{Binding Name}"/>
-                            <TextBlock Text=" " />
-                            <TextBlock Text="{Binding HealthString}" />
-                        </WrapPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Grid Grid.Column="0">
+                <ListView Name="CombatantList">
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Sort by Initiative" Click="SortByInitiative_Click" />
+                            <Separator />
+                            <MenuItem Header="Take Damage" Click="TakeDamage_Click"/>
+                            <MenuItem Header="Take Fire Damage" Click="TakeFireDamage_Click"/>
+                            <MenuItem Header="Take Fire Radiant Damage" Click="TakeFireRadiantDamage_Click"/>
+                            <MenuItem Header="Heal" Click="Heal_Click"/>
+                            <Separator />
+                            <MenuItem Header="Move Up" Click="MoveUp_Click"/>
+                            <MenuItem Header="Move Down" Click="MoveDown_Click"/>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text=" HP: " />
+                                    <TextBlock Text="{Binding CurrentHP}" />
+                                    <TextBlock Text="/" />
+                                    <TextBlock Text="{Binding MaxHP}" />
+                                    <TextBlock Text=" (" />
+                                    <TextBlock Text="{Binding TemporaryHP}" />
+                                    <TextBlock Text=")" />
+                                    <TextBlock Text=" Init: "/>
+                                    <TextBlock Text="{Binding Initiative}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="AC: " />
+                                    <TextBlock Text="{Binding ArmorClass}" />
+                                    <TextBlock Text=" Fort: " />
+                                    <TextBlock Text="{Binding Fortitude}" />
+                                    <TextBlock Text=" Refl: " />
+                                    <TextBlock Text="{Binding Reflex}" />
+                                    <TextBlock Text=" Will: " />
+                                    <TextBlock Text="{Binding Will}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Figurine: " />
+                                    <TextBlock Text="{Binding Figurine}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
             <GridSplitter HorizontalAlignment="Right"
                           VerticalAlignment="Stretch"
                           Grid.Column="1"
@@ -63,8 +92,7 @@
                           Background="#FFBCBCBC" />
             <Grid
                 Name="CombatantDisplay"
-                Grid.Column="2"
-                Background="Blue"/>
+                Grid.Column="2"/>
         </Grid>
     </Grid>
 </UserControl>

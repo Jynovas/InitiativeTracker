@@ -50,11 +50,44 @@ namespace InitiativeTrackerLibrary
                 return statusEffects;
             }
         }
-        public bool IsBloodied { get { return CurrentHP < MaxHP / 2; } }
-        public string HealthString
+        public bool IsBloodied { get { return CurrentHP <= MaxHP / 2; } }
+        public int ArmorClass
         {
-            get { return String.Format("HP: {0}/{1} ({2})", CurrentHP, MaxHP, TemporaryHP); }
+            get
+            {
+                int armorClass = baseArmorClass;
+
+                return armorClass;
+            }
         }
+        public int Fortitude
+        {
+            get
+            {
+                int fortitude = baseFortitude;
+
+                return fortitude;
+            }
+        }
+        public int Reflex
+        {
+            get
+            {
+                int reflex = baseReflex;
+
+                return reflex;
+            }
+        }
+        public int Will
+        {
+            get
+            {
+                int will = baseWill;
+
+                return will;
+            }
+        }
+        public String Figurine { get; set; }
         #endregion
 
         #region Events
@@ -79,7 +112,7 @@ namespace InitiativeTrackerLibrary
         public void StartTurn()
         {
             // Take ongoing Damage
-            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD43StatusEffectType.OngoingDamage))
+            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD4EStatusEffectType.OngoingDamage))
             {
                 var damageStatus = (status as DD4EDamageModifier);
                 if (damageStatus != null)
@@ -101,7 +134,7 @@ namespace InitiativeTrackerLibrary
         public void EndTurn()
         {
             // Regenerate Health
-            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD43StatusEffectType.Regeneration))
+            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD4EStatusEffectType.Regeneration))
             {
                 var damageStatus = (status as DD4EDamageModifier);
                 if (damageStatus != null)
@@ -139,7 +172,6 @@ namespace InitiativeTrackerLibrary
         public void Heal(int health)
         {
             CurrentHP = Math.Min(MaxHP, CurrentHP + health);
-
             OnPropertyChanged("CurrentHP");
         }
         public void TakeDamage(DD4EDamageType damageType, int damage)
@@ -148,7 +180,7 @@ namespace InitiativeTrackerLibrary
 
             // Find Vulnerability Amount
             var vulnerabilityModifier = 0;
-            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD43StatusEffectType.Vulnerability))
+            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD4EStatusEffectType.Vulnerability))
             {
                 var damageStatus = (status as DD4EDamageModifier);
                 if (damageStatus != null)
@@ -160,42 +192,67 @@ namespace InitiativeTrackerLibrary
             incomingDamage += vulnerabilityModifier;
 
             // Apply Resitances
-            var resistanceModifier = 0;
-            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD43StatusEffectType.Resistance))
+            // 1) Build List of Resistance
+            var resistanceModifier = Int32.MaxValue; 
+            DD4EDamageType resistanceList = DD4EDamageType.None;
+            foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD4EStatusEffectType.Resistance))
             {
                 var damageStatus = (status as DD4EDamageModifier);
                 if (damageStatus != null)
                 {
-                    if ((damageStatus.DamageType & damageType) != DD4EDamageType.None)
-                        resistanceModifier = Math.Max(resistanceModifier, damageStatus.DamageAmount);
+                    resistanceList |= damageStatus.DamageType;
                 }
             }
-            incomingDamage -= resistanceModifier;
 
-            if (TemporaryHP > 0)
+            // 2) Figure out if they resist everything
+            if ((resistanceList & damageType) == damageType)
             {
-                if (TemporaryHP > incomingDamage)
+                // 3) If they resist everything, find lowest resistance value and do so
+                foreach (DD4EStatusEffect status in StatusEffects.FindAll(s => s.Type == DD4EStatusEffectType.Resistance))
                 {
-                    TemporaryHP -= incomingDamage;
-                    incomingDamage = 0;
+                    var damageStatus = (status as DD4EDamageModifier);
+                    if (damageStatus != null)
+                    {
+                        if ((damageStatus.DamageType & damageType) != DD4EDamageType.None)
+                            resistanceModifier = Math.Min(resistanceModifier, damageStatus.DamageAmount);
+                    }
                 }
-                else
+
+                // 4) If they have a resist all use the maximum between all and the current resistance
+                if (StatusEffects.Exists(s => s.Type == DD4EStatusEffectType.Resistance && (s as DD4EDamageModifier).DamageType == DD4EDamageType.All))
+                    resistanceModifier = Math.Max(resistanceModifier, (StatusEffects.Find(s => s.Type == DD4EStatusEffectType.Resistance && (s as DD4EDamageModifier).DamageType == DD4EDamageType.All) as DD4EDamageModifier).DamageAmount);
+
+                // 5) Apply Resistance
+                incomingDamage -= resistanceModifier;
+            }
+
+            if (incomingDamage > 0)
+            {
+                if (TemporaryHP > 0)
                 {
-                    incomingDamage -= TemporaryHP;
-                    TemporaryHP = 0;
+                    if (TemporaryHP > incomingDamage)
+                    {
+                        TemporaryHP -= incomingDamage;
+                        incomingDamage = 0;
+                    }
+                    else
+                    {
+                        incomingDamage -= TemporaryHP;
+                        TemporaryHP = 0;
+                    }
                 }
             }
 
             if (incomingDamage > 0)
             {
                 CurrentHP = Math.Max(0, CurrentHP - incomingDamage);
-                OnPropertyChanged("HealthString");
+                OnPropertyChanged("CurrentHP");
             }
 
             if (CurrentHP <= 0)
             {
                 // Remove Regeneration and Ongoing Damage
-                StatusEffects.RemoveAll(s => (s.Type == DD43StatusEffectType.OngoingDamage || s.Type == DD43StatusEffectType.Regeneration));
+                StatusEffects.RemoveAll(s => (s.Type == DD4EStatusEffectType.OngoingDamage || s.Type == DD4EStatusEffectType.Regeneration));
             }
         }
         public void ApplyStatusEffect(DD4EStatusEffect newStatusEffect)

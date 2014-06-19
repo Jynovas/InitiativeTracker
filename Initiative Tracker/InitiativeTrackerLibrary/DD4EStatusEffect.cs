@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InitiativeTrackerLibrary
 {
-    public enum DD43StatusEffectType
+    public enum DD4EStatusEffectType
     {
         [Description("Ongoing Damage")]
         OngoingDamage,
@@ -64,7 +64,7 @@ namespace InitiativeTrackerLibrary
         /// <summary>
         /// The type of status effect being inflicted.
         /// </summary>
-        public DD43StatusEffectType Type { get; protected set; }
+        public DD4EStatusEffectType Type { get; protected set; }
         /// <summary>
         /// Combatant who caused the status effect.
         /// </summary>
@@ -78,7 +78,7 @@ namespace InitiativeTrackerLibrary
         /// </summary>
         public int SaveModifier { get; set; }
 
-        public DD4EStatusEffect(DD43StatusEffectType type, string source, DD4EStatusEffectDuration duration)
+        public DD4EStatusEffect(DD4EStatusEffectType type, string source, DD4EStatusEffectDuration duration)
         {
             Type = type;
             Source = source;
@@ -94,7 +94,7 @@ namespace InitiativeTrackerLibrary
     public class DD4EOngoingDamage : DD4EDamageModifier
     {
         public DD4EOngoingDamage(string source, DD4EDamageType damageType, int damageAmount, DD4EStatusEffectDuration duration)
-            : base(DD43StatusEffectType.OngoingDamage, source, damageType, damageAmount, duration)
+            : base(DD4EStatusEffectType.OngoingDamage, source, damageType, damageAmount, duration)
         {
 
         }
@@ -108,7 +108,7 @@ namespace InitiativeTrackerLibrary
     public class DD4ERegeneration : DD4EDamageModifier
     {
         public DD4ERegeneration(string source, int damageAmount, DD4EStatusEffectDuration duration)
-            : base(DD43StatusEffectType.OngoingDamage, source, DD4EDamageType.None, damageAmount, duration)
+            : base(DD4EStatusEffectType.OngoingDamage, source, DD4EDamageType.None, damageAmount, duration)
         {
 
         }
@@ -124,12 +124,12 @@ namespace InitiativeTrackerLibrary
         }
     }
 
-    public abstract class DD4EDamageModifier : DD4EStatusEffect
+    public class DD4EDamageModifier : DD4EStatusEffect
     {
         public DD4EDamageType DamageType { get; protected set; }
         public int DamageAmount { get; protected set; }
 
-        public DD4EDamageModifier(DD43StatusEffectType type, string source, DD4EDamageType damageType, int damageAmount, DD4EStatusEffectDuration duration)
+        public DD4EDamageModifier(DD4EStatusEffectType type, string source, DD4EDamageType damageType, int damageAmount, DD4EStatusEffectDuration duration)
             : base(type, source, duration)
         {
             DamageType = damageType;
