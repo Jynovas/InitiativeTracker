@@ -1,0 +1,28 @@
+﻿<Window x:Class="Initiative_Tracker.DD4E.AttackTargetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AttackTargetWindow" Height="300" Width="300">
+    <Grid>
+        <Button Content="Attack!" HorizontalAlignment="Left" Margin="207,238,0,0" VerticalAlignment="Top" Width="75" TabIndex="7"/>
+        <TextBlock HorizontalAlignment="Left" Margin="107,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label Content="Defender: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="DefenderNameLabel" Content="Defender" HorizontalAlignment="Left" Margin="80,10,0,0" VerticalAlignment="Top" Width="202"/>
+        <Label Content="Defense: " HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="DefenseComboBox" HorizontalAlignment="Left" Margin="80,45,0,0" VerticalAlignment="Top" Width="202" TabIndex="0">
+            <ComboBoxItem Content="Armor Class"/>
+            <ComboBoxItem Content="Fortitude"/>
+            <ComboBoxItem Content="Reflex"/>
+            <ComboBoxItem Content="Will"/>
+        </ComboBox>
+        <Label Content="To Hit: " HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.921,-0.385"/>
+        <CheckBox x:Name="CriticalHitCheckBox" Content="Critical Hit!" HorizontalAlignment="Left" Margin="207,122,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.662,-1.25" TabIndex="5"/>
+        <TextBox x:Name="ToHitTextBox" HorizontalAlignment="Left" Height="23" Margin="80,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="4"/>
+        <Label Content="Damage: " HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Width="59"/>
+        <TextBox x:Name="DamageTextBox" HorizontalAlignment="Left" Height="23" Margin="80,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="6"/>
+        <Label Content="Def. Adj.: " HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="DefenseAdjustmentTextBox" HorizontalAlignment="Left" Height="23" Margin="80,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="1"/>
+        <Button x:Name="AdjustmentUpButton" Content="+" HorizontalAlignment="Left" Margin="200,76,0,0" VerticalAlignment="Top" Width="25" TabIndex="2"/>
+        <Button x:Name="AdjustmentDownButton" Content="-" HorizontalAlignment="Left" Margin="225,76,0,0" VerticalAlignment="Top" Width="25" TabIndex="3"/>
+
+    </Grid>
+</Window>

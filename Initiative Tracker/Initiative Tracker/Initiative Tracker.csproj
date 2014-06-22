@@ -53,11 +53,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DD4E\AttackTargetWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DD4E\DD4eCombatTracker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DD4E\TakeDamageWindow.xaml">
+    <Page Include="DD4E\SelectTargetsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -69,11 +73,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DD4E\AttackTargetWindow.xaml.cs">
+      <DependentUpon>AttackTargetWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DD4E\DD4eCombatTracker.xaml.cs">
       <DependentUpon>DD4eCombatTracker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DD4E\TakeDamageWindow.xaml.cs">
-      <DependentUpon>TakeDamageWindow.xaml</DependentUpon>
+    <Compile Include="DD4E\SelectTargetsWindow.xaml.cs">
+      <DependentUpon>SelectTargetsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="IListExtension.cs" />
     <Compile Include="MainWindow.xaml.cs">

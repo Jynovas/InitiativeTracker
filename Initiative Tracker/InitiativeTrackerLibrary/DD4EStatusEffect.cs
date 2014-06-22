@@ -89,6 +89,13 @@ namespace InitiativeTrackerLibrary
         {
             return this.Type == other.Type;
         }
+
+        public virtual DD4EStatusEffect Copy()
+        {
+            var newStatus = new DD4EStatusEffect(Type, Source, Duration);
+            newStatus.SaveModifier = this.SaveModifier;
+            return newStatus;
+        }
     }
 
     public class DD4EOngoingDamage : DD4EDamageModifier
@@ -150,6 +157,13 @@ namespace InitiativeTrackerLibrary
             {
                 return false;
             }
+        }
+
+        public override DD4EStatusEffect Copy()
+        {
+            var newStatus = new DD4EDamageModifier(Type, Source, DamageType, DamageAmount, Duration);
+            newStatus.SaveModifier = this.SaveModifier;
+            return newStatus;
         }
     }
 }

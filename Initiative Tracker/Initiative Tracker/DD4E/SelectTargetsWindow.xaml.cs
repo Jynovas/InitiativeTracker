@@ -18,7 +18,7 @@ namespace Initiative_Tracker.DD4E
     /// <summary>
     /// Interaction logic for TakeDamageWindow.xaml
     /// </summary>
-    public partial class TakeDamageWindow : Window
+    public partial class SelectTargetsWindow : Window
     {
         protected IList<DD4ECombatant> Combatants { get; set; }
 
@@ -43,7 +43,7 @@ namespace Initiative_Tracker.DD4E
             }
         }
 
-        public TakeDamageWindow(IList<DD4ECombatant> combatants)
+        public SelectTargetsWindow(IList<DD4ECombatant> combatants)
         {
             InitializeComponent();
             this.Combatants = combatants;
@@ -53,7 +53,7 @@ namespace Initiative_Tracker.DD4E
             DamageTypeList.ItemsSource = DamageTypes;
         }
 
-        public TakeDamageWindow(IList<DD4ECombatant> combatants, int selectedIndex)
+        public SelectTargetsWindow(IList<DD4ECombatant> combatants, int selectedIndex)
         {
             InitializeComponent();
             this.Combatants = combatants;
@@ -86,7 +86,25 @@ namespace Initiative_Tracker.DD4E
 
         private void ToHitText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            e.Handled = System.Text.RegularExpressions.Regex.IsMatch(ToHitText.Text, "^[0-9]*$");
+            //e.Handled = System.Text.RegularExpressions.Regex.IsMatch(ToHitText.Text, "^[0-9]*$");
+        }
+
+        private void Attack_Click(object sender, RoutedEventArgs e)
+        {
+            if (DefenderList.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select targets for the attack.", "Warning");
+                return;
+            }
+
+            foreach (var target in DefenderList.SelectedItems)
+            {
+                var properTarget = (target as DD4ECombatant);
+                if (properTarget != null)
+                {
+                    // Do the thing! Zhu li!
+                }
+            }
         }
     }
 }
