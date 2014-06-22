@@ -101,10 +101,9 @@ namespace Initiative_Tracker.DD4E
             if (CombatantList.SelectedIndex == -1)
                 return;
 
-            //(CombatantList.SelectedItem as DD4ECombatant).TakeDamage(DD4EDamageType.Unaspected, 5);
-
             var damageWindow = new SelectTargetsWindow(Combatants, CombatantList.SelectedIndex);
-            damageWindow.Show();
+            damageWindow.Owner = this.FindParent<Window>(); 
+            damageWindow.ShowDialog();
         }
         private void TakeFireDamage_Click(object sender, RoutedEventArgs e)
         {

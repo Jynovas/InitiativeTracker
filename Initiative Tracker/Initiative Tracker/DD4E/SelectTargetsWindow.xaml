@@ -7,7 +7,7 @@
         <Button Content="All Types" HorizontalAlignment="Left" Margin="13,303,0,0" VerticalAlignment="Top" Width="88" Click="All_Click"/>
         <Button Content="None" HorizontalAlignment="Left" Margin="108,303,0,0" Width="90" Click="None_Click" Height="22" VerticalAlignment="Top"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="503,353,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click"/>
-        <ListView Name="DefenderList" HorizontalAlignment="Left" Height="223" Margin="203,75,0,0" VerticalAlignment="Top" Width="185">
+        <ListView Name="DefenderList" HorizontalAlignment="Left" Height="223" Margin="203,75,0,0" VerticalAlignment="Top" Width="185" SelectionMode="Multiple">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
@@ -29,7 +29,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <Label Content="Targets:" HorizontalAlignment="Left" Margin="203,47,0,0" VerticalAlignment="Top"/>
-        <ListView HorizontalAlignment="Left" Height="223" Margin="393,75,0,0" VerticalAlignment="Top" Width="185">
+        <ListView Name="EffectList" HorizontalAlignment="Left" Height="223" Margin="393,75,0,0" VerticalAlignment="Top" Width="185">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
@@ -39,7 +39,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Label Content="Effects:" HorizontalAlignment="Left" Margin="393,49,0,0" VerticalAlignment="Top"/>
-        <Button Content="Attack!" HorizontalAlignment="Left" Margin="423,353,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Attack!" HorizontalAlignment="Left" Margin="423,353,0,0" VerticalAlignment="Top" Width="75" Click="Attack_Click"/>
         <Button Content="Remove Effect" HorizontalAlignment="Left" Margin="486,303,0,0" VerticalAlignment="Top" Width="88"/>
         <Button Content="Add Effect" HorizontalAlignment="Left" Margin="393,303,0,0" VerticalAlignment="Top" Width="88"/>
 

@@ -82,6 +82,7 @@
     <Compile Include="DD4E\SelectTargetsWindow.xaml.cs">
       <DependentUpon>SelectTargetsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DependacnyObjectExtension.cs" />
     <Compile Include="IListExtension.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

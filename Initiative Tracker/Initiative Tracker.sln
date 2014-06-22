@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Initiative Tracker", "Initi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitiativeTrackerLibrary", "InitiativeTrackerLibrary\InitiativeTrackerLibrary.csproj", "{34B748CA-A14F-44BA-A83E-F29245770106}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitiativeTestApp", "InitiativeTestApp\InitiativeTestApp.csproj", "{356AE3BF-AC9E-4B4D-BC90-6282957BDDEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{34B748CA-A14F-44BA-A83E-F29245770106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34B748CA-A14F-44BA-A83E-F29245770106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34B748CA-A14F-44BA-A83E-F29245770106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356AE3BF-AC9E-4B4D-BC90-6282957BDDEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356AE3BF-AC9E-4B4D-BC90-6282957BDDEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356AE3BF-AC9E-4B4D-BC90-6282957BDDEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356AE3BF-AC9E-4B4D-BC90-6282957BDDEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

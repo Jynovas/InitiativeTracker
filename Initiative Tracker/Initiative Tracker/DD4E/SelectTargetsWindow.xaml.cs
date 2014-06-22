@@ -97,14 +97,41 @@ namespace Initiative_Tracker.DD4E
                 return;
             }
 
+            //Create Damage Flag
+            DD4EDamageType damageFlag = DD4EDamageType.None;
+
+            if (DamageTypeList.SelectedItems.Count < 1)
+            {
+                damageFlag = DD4EDamageType.Unaspected;
+            }
+            else
+            {
+                foreach (var flag in DamageTypeList.SelectedItems)
+                    damageFlag |= (DD4EDamageType)flag;
+            }
+
+            //Create List of Status Effects
+            var statusEffectList = new List<DD4EStatusEffect>();
+
+            foreach(var status in EffectList.SelectedItems)
+            {
+                var properStatus = status as DD4EStatusEffect;
+                if (properStatus != null)
+                    statusEffectList.Add(properStatus);
+            }
+
             foreach (var target in DefenderList.SelectedItems)
             {
                 var properTarget = (target as DD4ECombatant);
                 if (properTarget != null)
                 {
-                    // Do the thing! Zhu li!
+                    var attackWindow = new AttackTargetWindow(ref properTarget, damageFlag, statusEffectList);
+                    attackWindow.Owner = this;
+                    attackWindow.ShowDialog();
                 }
             }
+
+            this.Close();
         }
     }
 }

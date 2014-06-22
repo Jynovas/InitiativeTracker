@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AttackTargetWindow" Height="300" Width="300">
     <Grid>
-        <Button Content="Attack!" HorizontalAlignment="Left" Margin="207,238,0,0" VerticalAlignment="Top" Width="75" TabIndex="7"/>
+        <Button Content="Attack!" HorizontalAlignment="Left" Margin="207,238,0,0" VerticalAlignment="Top" Width="75" TabIndex="7" Click="Attack_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="107,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label Content="Defender: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="DefenderNameLabel" Content="Defender" HorizontalAlignment="Left" Margin="80,10,0,0" VerticalAlignment="Top" Width="202"/>
