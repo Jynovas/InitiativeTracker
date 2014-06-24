@@ -17,7 +17,7 @@ namespace InitiativeTrackerLibrary
         Gargantuan
     }
 
-    public partial class DD4ECombatant : Combatant, INotifyPropertyChanged
+    public partial class DD4ECombatant : Combatant
     {
         #region Variables
         int baseArmorClass;
@@ -90,9 +90,6 @@ namespace InitiativeTrackerLibrary
         public String Figurine { get; set; }
         #endregion
 
-        #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
 
         #region Constructors
         public DD4ECombatant(string name, int maxHP, int ac, int fort, int refl, int will, int initBonus)
@@ -284,18 +281,6 @@ namespace InitiativeTrackerLibrary
             Initiative = Random.Next(1, 20) + InitiativeBonus;
             OnPropertyChanged("Initiative");
         }
-
-        #region Event Handling
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
-        }
-        protected void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged.Invoke(this, args);
-        }
-        #endregion
         #endregion
     }
 }

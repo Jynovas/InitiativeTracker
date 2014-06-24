@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace InitiativeTrackerLibrary
 {
-    public class Combatant
+    public class Combatant : INotifyPropertyChanged
     {
         #region Variables
         static Random random;
+        int initiative;
         #endregion
 
         #region Properties
-        public int Initiative { get; set; }
+        public int Initiative
+        {
+            get { return initiative; }
+            set
+            {
+                initiative = value;
+                OnPropertyChanged("Initiative");
+            }
+        }
         public String Name { get; set; }
         public int ID { get; set; }
         public bool IsPlayer { get; set; }
@@ -43,6 +53,10 @@ namespace InitiativeTrackerLibrary
         }
         #endregion
 
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
         #region Constructors
         public Combatant()
         {
@@ -66,6 +80,18 @@ namespace InitiativeTrackerLibrary
         {
             Initiative = Random.Next();
         }
+
+        #region Event Handling
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+        }
+        protected void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, args);
+        }
+        #endregion
         #endregion
     }
 }

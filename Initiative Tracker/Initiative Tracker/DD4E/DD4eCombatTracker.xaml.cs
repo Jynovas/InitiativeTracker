@@ -40,6 +40,7 @@ namespace Initiative_Tracker.DD4E
                 return combatants;
             }
         }
+        bool CombatActive { get; set; }
         public DD4ECombatant ActiveCombatant
         {
             get { return activeCombatant; }
@@ -103,29 +104,63 @@ namespace Initiative_Tracker.DD4E
         #region Combat Menu Items
         private void StartCombat_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Combatant c in Combatants)
-                if (!c.IsPlayer)
-                    c.RollInitiative();
+            if (Combatants.Count > 1)
+            {
+                for (int i = 0; i < Combatants.Count; i++)
+                {
+                    if (!Combatants[i].IsPlayer)
+                    {
+                        Combatants[i].RollInitiative();
+                    }
+                    else
+                    {
+                        SetCombatantInitiative(i);
+                    }
+                }
 
-            // Input Player Initiatives
+                SortByInitiative();
 
-            SortByInitiative();
+                ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
 
-            ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
+                CombatActive = true;
+            }
         }
         private void EndCombat_Click(object sender, RoutedEventArgs e)
         {
+            CombatActive = false;
 
+            ActiveCombatant = null;
         }
         private void NextTurn_Click(object sender, RoutedEventArgs e)
         {
-            var index = CombatantList.Items.IndexOf(activeCombatant);
-            if (index != -1)
+            if (CombatActive)
             {
-                if (index >= CombatantList.Items.Count - 1)
-                    ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
-                else
-                    ActiveCombatant = CombatantList.Items[index + 1] as DD4ECombatant;
+                var index = CombatantList.Items.IndexOf(ActiveCombatant);
+                if (index != -1)
+                {
+                    for (int i = 0; i < Combatants.Count; i++)
+                    {
+                        if (i == index)
+                            Combatants[i].EndTurn();
+                        else
+                            Combatants[i].OtherEndTurn(Combatants[index].CombatName);
+                    }
+
+                    if (index >= CombatantList.Items.Count - 1)
+                        ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
+                    else
+                        ActiveCombatant = CombatantList.Items[index + 1] as DD4ECombatant;
+
+                    var startIndex = CombatantList.Items.IndexOf(activeCombatant);
+
+                    for (int i = 0; i < Combatants.Count; i++)
+                    {
+                        if (i == startIndex)
+                            Combatants[i].StartTurn();
+                        else
+                            Combatants[i].OtherStartTurn(Combatants[startIndex].CombatName);
+                    }
+                }
             }
         }
         private void AddCombatant_Click(object sender, RoutedEventArgs e)
@@ -142,16 +177,19 @@ namespace Initiative_Tracker.DD4E
                 {
                     if (ActiveCombatant.Name.Equals((CombatantList.SelectedItem as DD4ECombatant).Name))
                     {
-                        // Move to next combatant
+                        var index = CombatantList.Items.IndexOf(ActiveCombatant);
+                        if (index >= CombatantList.Items.Count - 1)
+                            ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
+                        else
+                            ActiveCombatant = CombatantList.Items[index + 1] as DD4ECombatant;
                     }
                 }
 
                 var removeIndex = CombatantList.SelectedIndex;
-                
-                if (CombatantList.SelectedIndex >= CombatantList.Items.Count -1)
-                    CombatantList.SelectedIndex = 0;
-                else
-                    CombatantList.SelectedIndex += 1;
+
+                CombatantList.SelectedIndex = -1;
+
+                Combatants.RemoveAt(removeIndex);
             }
         }
         #endregion
@@ -159,6 +197,13 @@ namespace Initiative_Tracker.DD4E
         private void SortByInitiative_Click(object sender, RoutedEventArgs e)
         {
             SortByInitiative();
+        }
+        private void SetInitiative_Click(object sender, RoutedEventArgs e)
+        {
+            if (CombatantList.SelectedIndex == -1)
+                return;
+
+            SetCombatantInitiative(CombatantList.SelectedIndex);
         }
         private void Attack_Click(object sender, RoutedEventArgs e)
         {
@@ -237,6 +282,12 @@ namespace Initiative_Tracker.DD4E
                 if (i != highestIndex)
                     Combatants = (ObservableCollection<DD4ECombatant>)Combatants.Swap(i, highestIndex);
             }
+        }
+        private void SetCombatantInitiative(int index)
+        {
+            var setInitiativeWindow = new SetInitiativeWindow(Combatants[index]);
+            setInitiativeWindow.Owner = this.FindParent<Window>();
+            setInitiativeWindow.ShowDialog();
         }
         #endregion
         #endregion

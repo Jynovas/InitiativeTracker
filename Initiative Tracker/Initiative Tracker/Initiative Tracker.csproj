@@ -69,6 +69,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DD4E\SetInitiativeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,6 +92,9 @@
     </Compile>
     <Compile Include="DD4E\SelectTargetsWindow.xaml.cs">
       <DependentUpon>SelectTargetsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DD4E\SetInitiativeWindow.xaml.cs">
+      <DependentUpon>SetInitiativeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DependacnyObjectExtension.cs" />
     <Compile Include="IListExtension.cs" />

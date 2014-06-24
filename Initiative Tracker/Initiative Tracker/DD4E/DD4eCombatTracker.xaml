@@ -23,10 +23,10 @@
             <MenuItem Header="_Data" Click="TestMenuItem_Click"/>
             <MenuItem Header="_Combat">
                 <MenuItem Header="Add Combatant" Click="AddCombatant_Click"/>
-                <MenuItem Header="Remove Combatant"/>
+                <MenuItem Header="Remove Combatant" Click="RemoveCombatant_Click"/>
                 <Separator />
                 <MenuItem Header="Start Combat" Click="StartCombat_Click" />
-                <MenuItem Header="End Combat" />
+                <MenuItem Header="End Combat" Click="EndCombat_Click"/>
                 <Separator />
                 <MenuItem Header="Next Turn" Click="NextTurn_Click"/>
             </MenuItem>
@@ -43,10 +43,9 @@
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Sort by Initiative" Click="SortByInitiative_Click" />
+                            <MenuItem Header="Set Initiative" Click="SetInitiative_Click" />
                             <Separator />
                             <MenuItem Header="Attack" Click="Attack_Click"/>
-                            <MenuItem Header="Take Fire Damage" Click="TakeFireDamage_Click"/>
-                            <MenuItem Header="Take Fire Radiant Damage" Click="TakeFireRadiantDamage_Click"/>
                             <MenuItem Header="Heal" Click="Heal_Click"/>
                             <Separator />
                             <MenuItem Header="Move Up" Click="MoveUp_Click"/>

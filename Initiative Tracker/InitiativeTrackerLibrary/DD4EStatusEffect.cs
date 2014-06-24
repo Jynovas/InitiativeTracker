@@ -66,7 +66,7 @@ namespace InitiativeTrackerLibrary
         /// </summary>
         public DD4EStatusEffectType Type { get; protected set; }
         /// <summary>
-        /// Combatant who caused the status effect.
+        /// Combatant (using CombatantName) who caused the status effect.
         /// </summary>
         public String Source { get; protected set; }
         /// <summary>
