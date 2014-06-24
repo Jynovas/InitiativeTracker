@@ -17,7 +17,7 @@ namespace InitiativeTrackerLibrary
         Gargantuan
     }
 
-    public class DD4ECombatant : Combatant, INotifyPropertyChanged
+    public partial class DD4ECombatant : Combatant, INotifyPropertyChanged
     {
         #region Variables
         int baseArmorClass;

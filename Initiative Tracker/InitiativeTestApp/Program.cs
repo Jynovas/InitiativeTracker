@@ -16,9 +16,9 @@ namespace InitiativeTestApp
             string test0 = "hello";
             string test1 = "0";
             string test2 = "54325164325";
-            string test3 = "-54316";
-            string test4 = "1,000"; // this should technically return as true, however, I am not getting into that right now
+            string test3 = "-54316";            string test4 = "1,000"; // this should technically return as true, however, I am not getting into that right now
             string test5 = "14.002";
+            string test6 = "--0132543";
 
             Console.WriteLine("Test 0, {0} is an integer? {1}", test0, integerRegex.IsMatch(test0));
             Console.WriteLine("Test 1, {0} is an integer? {1}", test1, integerRegex.IsMatch(test1));
@@ -26,6 +26,7 @@ namespace InitiativeTestApp
             Console.WriteLine("Test 3, {0} is an integer? {1}", test3, integerRegex.IsMatch(test3));
             Console.WriteLine("Test 4, {0} is an integer? {1}", test4, integerRegex.IsMatch(test4));
             Console.WriteLine("Test 5, {0} is an integer? {1}", test5, integerRegex.IsMatch(test5));
+            Console.WriteLine("Test 6, {0} is an integer? {1}", test6, integerRegex.IsMatch(test6));
 
             Console.Read();
         }

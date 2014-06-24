@@ -15,6 +15,7 @@ namespace InitiativeTrackerLibrary
         #region Properties
         public int Initiative { get; set; }
         public String Name { get; set; }
+        public int ID { get; set; }
         public bool IsPlayer { get; set; }
         protected static Random Random
         {
@@ -26,6 +27,20 @@ namespace InitiativeTrackerLibrary
                 return random;
             }
         }
+        public String CombatName
+        {
+            get
+            {
+                if (IsPlayer)
+                {
+                    return Name;
+                }
+                else
+                {
+                    return Name + " [" + ID + "]";
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -33,6 +48,7 @@ namespace InitiativeTrackerLibrary
         {
             Name = "Combatant";
             Initiative = 0;
+            ID = 0;
         }
         public Combatant(string name)
         {

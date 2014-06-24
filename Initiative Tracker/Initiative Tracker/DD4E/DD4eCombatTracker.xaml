@@ -22,12 +22,13 @@
             <MenuItem Header="_Edit" Click="TestMenuItem_Click"/>
             <MenuItem Header="_Data" Click="TestMenuItem_Click"/>
             <MenuItem Header="_Combat">
+                <MenuItem Header="Add Combatant" Click="AddCombatant_Click"/>
+                <MenuItem Header="Remove Combatant"/>
+                <Separator />
                 <MenuItem Header="Start Combat" Click="StartCombat_Click" />
                 <MenuItem Header="End Combat" />
                 <Separator />
-                <MenuItem Header="Next Turn" />
-                <Separator />
-                <MenuItem Header="Add Combatant" Click="AddCombatant_Click"/>
+                <MenuItem Header="Next Turn" Click="NextTurn_Click"/>
             </MenuItem>
             <MenuItem Header="_Help" Click="TestMenuItem_Click"/>
         </Menu>
@@ -56,7 +57,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding CombatName}" />
                                     <TextBlock Text=" HP: " />
                                     <TextBlock Text="{Binding CurrentHP}" />
                                     <TextBlock Text="/" />

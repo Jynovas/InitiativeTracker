@@ -25,6 +25,7 @@ namespace Initiative_Tracker.DD4E
     {
         #region Variables
         ObservableCollection<DD4ECombatant> combatants;
+        DD4ECombatant activeCombatant;
         #endregion
 
         #region Properties
@@ -37,6 +38,30 @@ namespace Initiative_Tracker.DD4E
                     combatants = new ObservableCollection<DD4ECombatant>();
 
                 return combatants;
+            }
+        }
+        public DD4ECombatant ActiveCombatant
+        {
+            get { return activeCombatant; }
+            set
+            {
+                if (activeCombatant == null || value == null || !activeCombatant.Equals(value))
+                {
+                    activeCombatant = value;
+
+                    var index = CombatantList.Items.IndexOf(activeCombatant);
+                    if (index != -1)
+                    {
+                        for (int i = 0; i < CombatantList.Items.Count; i++)
+                        {
+                            var row = CombatantList.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                            if (i == index)
+                                row.Background = Brushes.Red;
+                            else
+                                row.Background = Brushes.Transparent;
+                        }
+                    }
+                }
             }
         }
         #endregion
@@ -82,13 +107,52 @@ namespace Initiative_Tracker.DD4E
                 if (!c.IsPlayer)
                     c.RollInitiative();
 
+            // Input Player Initiatives
+
             SortByInitiative();
+
+            ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
+        }
+        private void EndCombat_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void NextTurn_Click(object sender, RoutedEventArgs e)
+        {
+            var index = CombatantList.Items.IndexOf(activeCombatant);
+            if (index != -1)
+            {
+                if (index >= CombatantList.Items.Count - 1)
+                    ActiveCombatant = CombatantList.Items[0] as DD4ECombatant;
+                else
+                    ActiveCombatant = CombatantList.Items[index + 1] as DD4ECombatant;
+            }
         }
         private void AddCombatant_Click(object sender, RoutedEventArgs e)
         {
-            DD4ECombatant combatant = new DD4ECombatant("Goblin " + Combatants.Count, 25, 15, 15, 16, 15, 3);
-            combatant.RollInitiative();
-            Combatants.Add(combatant);
+            var addCombatantWindow = new AddCombatantWindow(Combatants);
+            addCombatantWindow.Owner = this.FindParent<Window>();
+            addCombatantWindow.ShowDialog();
+        }
+        private void RemoveCombatant_Click(object sender, RoutedEventArgs e)
+        {
+            if (CombatantList.SelectedItem != null)
+            {
+                if (ActiveCombatant != null)
+                {
+                    if (ActiveCombatant.Name.Equals((CombatantList.SelectedItem as DD4ECombatant).Name))
+                    {
+                        // Move to next combatant
+                    }
+                }
+
+                var removeIndex = CombatantList.SelectedIndex;
+                
+                if (CombatantList.SelectedIndex >= CombatantList.Items.Count -1)
+                    CombatantList.SelectedIndex = 0;
+                else
+                    CombatantList.SelectedIndex += 1;
+            }
         }
         #endregion
         #region Combatant Context Menu Items
