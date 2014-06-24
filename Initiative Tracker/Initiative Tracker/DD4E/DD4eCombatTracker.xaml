@@ -44,9 +44,11 @@
                         <ContextMenu>
                             <MenuItem Header="Sort by Initiative" Click="SortByInitiative_Click" />
                             <MenuItem Header="Set Initiative" Click="SetInitiative_Click" />
+                            <MenuItem Header="Set Figurine" Click="SetFigurine_Click" />
                             <Separator />
                             <MenuItem Header="Attack" Click="Attack_Click"/>
                             <MenuItem Header="Heal" Click="Heal_Click"/>
+                            <MenuItem Header="Add Temp HP" Click="AddTempHP_Click" />
                             <Separator />
                             <MenuItem Header="Move Up" Click="MoveUp_Click"/>
                             <MenuItem Header="Move Down" Click="MoveDown_Click"/>

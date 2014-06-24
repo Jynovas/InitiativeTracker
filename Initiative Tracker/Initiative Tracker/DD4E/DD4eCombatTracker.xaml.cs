@@ -57,9 +57,14 @@ namespace Initiative_Tracker.DD4E
                         {
                             var row = CombatantList.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
                             if (i == index)
-                                row.Background = Brushes.Red;
+                            {
+                                row.Background = Brushes.CornflowerBlue;
+                            }
                             else
+                            {
                                 row.Background = Brushes.Transparent;
+                            }
+
                         }
                     }
                 }
@@ -75,10 +80,10 @@ namespace Initiative_Tracker.DD4E
             // This is for testing
             for (int i = 0; i < 5; i++)
             {
-                DD4ECombatant combatant = new DD4ECombatant("Goblin " + Combatants.Count, 25, 15, 15, 16, 15, 3);
+                DD4ECombatant combatant = new DD4ECombatant("Goblin", 25, 15, 15, 16, 15, 3);
                 var fireRes = new DD4EDamageModifier(DD4EStatusEffectType.Resistance, combatant.Name, DD4EDamageType.Fire, 5, DD4EStatusEffectDuration.EndOfEncounter);
                 combatant.ApplyStatusEffect(fireRes);
-                Combatants.Add(combatant);
+                AddCombatant(combatant);
             }
 
             this.CombatantList.ItemsSource = Combatants;
@@ -205,6 +210,15 @@ namespace Initiative_Tracker.DD4E
 
             SetCombatantInitiative(CombatantList.SelectedIndex);
         }
+        private void SetFigurine_Click(object sender, RoutedEventArgs e)
+        {
+            if (CombatantList.SelectedIndex == -1)
+                return;
+
+            var figurineWindow = new SetFigurineWindow(Combatants[CombatantList.SelectedIndex]);
+            figurineWindow.Owner = this.FindParent<Window>();
+            figurineWindow.ShowDialog();
+        }
         private void Attack_Click(object sender, RoutedEventArgs e)
         {
             if (CombatantList.SelectedIndex == -1)
@@ -214,26 +228,23 @@ namespace Initiative_Tracker.DD4E
             damageWindow.Owner = this.FindParent<Window>(); 
             damageWindow.ShowDialog();
         }
-        private void TakeFireDamage_Click(object sender, RoutedEventArgs e)
-        {
-            if (CombatantList.SelectedIndex == -1)
-                return;
-
-            (CombatantList.SelectedItem as DD4ECombatant).TakeDamage(DD4EDamageType.Fire, 5);
-        }
-        private void TakeFireRadiantDamage_Click(object sender, RoutedEventArgs e)
-        {
-            if (CombatantList.SelectedIndex == -1)
-                return;
-
-            (CombatantList.SelectedItem as DD4ECombatant).TakeDamage(DD4EDamageType.Fire | DD4EDamageType.Radiant, 5);
-        }
         private void Heal_Click(object sender, RoutedEventArgs e)
         {
             if (CombatantList.SelectedIndex == -1)
                 return;
 
-            (CombatantList.SelectedItem as DD4ECombatant).Heal(5);
+            var healWindow = new HealCombatantWindow(Combatants[CombatantList.SelectedIndex]);
+            healWindow.Owner = this.FindParent<Window>();
+            healWindow.ShowDialog();
+        }
+        private void AddTempHP_Click(object sender, RoutedEventArgs e)
+        {
+            if (CombatantList.SelectedIndex == -1)
+                return;
+
+            var addTempWindow = new AddTemporaryHealthWindow(Combatants[CombatantList.SelectedIndex]);
+            addTempWindow.Owner = this.FindParent<Window>();
+            addTempWindow.ShowDialog();
         }
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
@@ -288,6 +299,23 @@ namespace Initiative_Tracker.DD4E
             var setInitiativeWindow = new SetInitiativeWindow(Combatants[index]);
             setInitiativeWindow.Owner = this.FindParent<Window>();
             setInitiativeWindow.ShowDialog();
+        }
+        private void AddCombatant(DD4ECombatant combatant)
+        {
+            if (Combatants.Any(c => c.Name.Equals(combatant.Name) && c.IsPlayer == false))
+            {
+                int id = Combatants.Count(c => c.Name.Equals(combatant.Name) && c.IsPlayer == false);
+                combatant.ID = id;
+            }
+            else
+            {
+                if (Combatants.Any(c => c.Name.Equals(combatant.Name)))
+                {
+                    MessageBox.Show("You cannot add the same player character twice.", "Warning");
+                    return;
+                }
+            }
+            Combatants.Add(combatant);
         }
         #endregion
         #endregion

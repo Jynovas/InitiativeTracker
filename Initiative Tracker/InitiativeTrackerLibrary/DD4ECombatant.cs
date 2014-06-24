@@ -25,6 +25,9 @@ namespace InitiativeTrackerLibrary
         int baseReflex;
         int baseWill;
         List<DD4EStatusEffect> statusEffects;
+        int temporaryHealthPoints;
+        int currentHealthPoints;
+        string figurine;
         #endregion
 
         #region Properties
@@ -32,11 +35,27 @@ namespace InitiativeTrackerLibrary
         /// Returns the combatant's size category.
         /// </summary>
         public DD4ESize Size { get; set; }
-        public int TemporaryHP { get; set; }
+        public int TemporaryHP
+        {
+            get { return temporaryHealthPoints; }
+            set
+            {
+                temporaryHealthPoints = value;
+                OnPropertyChanged("TemporaryHP");
+            }
+        }
         /// <summary>
         /// Returns the Combatant's current health points (HP).
         /// </summary>
-        public int CurrentHP { get; protected set; }
+        public int CurrentHP
+        {
+            get { return currentHealthPoints; }
+            protected set
+            {
+                currentHealthPoints = value;
+                OnPropertyChanged("CurrentHP");
+            }
+        }
         public int MaxHP { get; protected set; }
         public int InitiativeBonus { get; set; }
         public List<DD4EStatusEffect> StatusEffects
@@ -87,9 +106,16 @@ namespace InitiativeTrackerLibrary
                 return will;
             }
         }
-        public String Figurine { get; set; }
+        public String Figurine
+        {
+            get { return figurine; }
+            set
+            {
+                figurine = value;
+                OnPropertyChanged("Figurine");
+            }
+        }
         #endregion
-
 
         #region Constructors
         public DD4ECombatant(string name, int maxHP, int ac, int fort, int refl, int will, int initBonus)
@@ -169,7 +195,6 @@ namespace InitiativeTrackerLibrary
         public void Heal(int health)
         {
             CurrentHP = Math.Min(MaxHP, CurrentHP + health);
-            OnPropertyChanged("CurrentHP");
         }
         public void TakeDamage(DD4EDamageType damageType, int damage)
         {
@@ -243,13 +268,13 @@ namespace InitiativeTrackerLibrary
             if (incomingDamage > 0)
             {
                 CurrentHP = Math.Max(0, CurrentHP - incomingDamage);
-                OnPropertyChanged("CurrentHP");
             }
 
             if (CurrentHP <= 0)
             {
                 // Remove Regeneration and Ongoing Damage
                 StatusEffects.RemoveAll(s => (s.Type == DD4EStatusEffectType.OngoingDamage || s.Type == DD4EStatusEffectType.Regeneration));
+                OnPropertyChanged("StatusEffects");
             }
         }
         public void ApplyStatusEffect(DD4EStatusEffect newStatusEffect)

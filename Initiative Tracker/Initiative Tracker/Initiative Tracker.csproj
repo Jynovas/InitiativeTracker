@@ -57,6 +57,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DD4E\AddTemporaryHealthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DD4E\AttackTargetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -65,7 +69,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DD4E\HealCombatantWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DD4E\SelectTargetsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DD4E\SetFigurineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,14 +96,23 @@
     <Compile Include="DD4E\AddCombatantWindow.xaml.cs">
       <DependentUpon>AddCombatantWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DD4E\AddTemporaryHealthWindow.xaml.cs">
+      <DependentUpon>AddTemporaryHealthWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DD4E\AttackTargetWindow.xaml.cs">
       <DependentUpon>AttackTargetWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DD4E\DD4eCombatTracker.xaml.cs">
       <DependentUpon>DD4eCombatTracker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DD4E\HealCombatantWindow.xaml.cs">
+      <DependentUpon>HealCombatantWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DD4E\SelectTargetsWindow.xaml.cs">
       <DependentUpon>SelectTargetsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DD4E\SetFigurineWindow.xaml.cs">
+      <DependentUpon>SetFigurineWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DD4E\SetInitiativeWindow.xaml.cs">
       <DependentUpon>SetInitiativeWindow.xaml</DependentUpon>
@@ -104,6 +125,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

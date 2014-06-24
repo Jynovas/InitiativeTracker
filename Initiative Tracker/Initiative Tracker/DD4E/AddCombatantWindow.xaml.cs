@@ -34,7 +34,62 @@ namespace Initiative_Tracker.DD4E
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var combatant = new DD4ECombatant("Cloud Strife", 100, 23, 25, 20, 17, 5);
+            if (String.IsNullOrWhiteSpace(NameTextBox.Text))
+            {
+                MessageBox.Show("Please input a name for the character", "Warning");
+                return;
+            }
+
+            if (!MaxHPTextBox.Text.IsPositiveInteger())
+            {
+                MaxHPTextBox.Text = "";
+                MessageBox.Show("Please put in a positive integer for health.", "Warning");
+                return;
+            }
+
+            if (!ArmorClassTextBox.Text.IsPositiveInteger())
+            {
+                ArmorClassTextBox.Text = "";
+                MessageBox.Show("Please put in a positive integer for armor class.", "Warning");
+                return;
+            }
+
+            if (!FortitudeTextBox.Text.IsPositiveInteger())
+            {
+                FortitudeTextBox.Text = "";
+                MessageBox.Show("Please put in a positive integer for fortitude.", "Warning");
+                return;
+            }
+
+            if (!ReflexTextBox.Text.IsPositiveInteger())
+            {
+                ReflexTextBox.Text = "";
+                MessageBox.Show("Please put in a positive integer for relfex.", "Warning");
+                return;
+            }
+
+            if (!WillTextBox.Text.IsPositiveInteger())
+            {
+                WillTextBox.Text = "";
+                MessageBox.Show("Please put in a positive integer for will.", "Warning");
+                return;
+            }
+
+            if (!InitiativeBonusTextBox.Text.IsPositiveInteger())
+            {
+                InitiativeBonusTextBox.Text = "";
+                MessageBox.Show("Please put in a positive integer for intiative bonus.", "Warning");
+                return;
+            }
+
+            var combatant = new DD4ECombatant(NameTextBox.Text, 
+                Convert.ToInt32(MaxHPTextBox.Text),
+                Convert.ToInt32(ArmorClassTextBox.Text),
+                Convert.ToInt32(FortitudeTextBox.Text),
+                Convert.ToInt32(ReflexTextBox.Text),
+                Convert.ToInt32(WillTextBox.Text),
+                Convert.ToInt32(InitiativeBonusTextBox.Text));
+
             combatant.IsPlayer = (bool)IsPlayerCheckBox.IsChecked;
 
             if (!combatant.IsPlayer)
